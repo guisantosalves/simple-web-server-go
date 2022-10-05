@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	fileServer := http.FileServer(http.Dir("./static"))
+
+	http.Handle("/", fileServer) // -> get the file server that I set in the var
 
 	// route, callback
 	// w -> response (write the response)
