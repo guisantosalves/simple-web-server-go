@@ -16,10 +16,27 @@ func main() {
 	// r -> request (requesting data)
 	http.HandleFunc("/hello", handleHello)
 
+	http.HandleFunc("/form", formHandler)
+
 	fmt.Println("Server running at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// response, request
+func formHandler(w http.ResponseWriter, r *http.Request) {
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "POST request successful")
+		return
+	}
+
+	name := r.FormValue("name")
+	address := r.FormValue("address")
+
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "adress = %s\n", address)
 }
 
 func handleHello(w http.ResponseWriter, r *http.Request) {
